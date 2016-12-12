@@ -45,5 +45,30 @@ angular.module('myApp.game', ['ngRoute'])
         $scope.selectedCard = card;
       }
 
+      $scope.onSelectedPropertyAndCountry = function(property, value, countryName) {
+        if ($scope.state == 'start')
+          $scope.state = 'playing';
+        // checar se acertou o nome do país, se não só passa pro próximo.
+        if (countryName !== countryName)
+          alert("O nome do país está errado.");
+
+        $scope.game.currentProperty = property;
+        $scope.game.currentValue = value;
+        $scope.game.currentCountry = countryName;
+        $scope.game.$save().then(function() {
+          console.log('Sucesso!');
+          console.log($scope.selectedCard.$id)
+          $firebaseObject(gameService.database.playerCards($scope.game.$id, $scope.me.$id, $scope.selectedCard.$id)).$remove();
+          
+          gameService.database.gamePlayers($scope.game.$id, $scope.me.$id).child('cardsCount').transaction(function (current_value) {
+            return current_value - 1;
+          });
+
+          $scope.selectedCard = null;
+        }).catch(function(error) {
+          alert('Error!');
+        });
+      }
+
       init();
     }]);

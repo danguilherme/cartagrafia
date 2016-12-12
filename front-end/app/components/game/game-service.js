@@ -4,7 +4,7 @@ angular.module('myApp.card.gameControl-service', [])
 
 .service('gameService', ['$firebaseObject', '$firebaseArray', '$firebaseAuth', function ($firebaseObject, $firebaseArray, $firebaseAuth) {
     var currentGame = null;
-    
+
     function set(k, v) {
       localStorage[k] = JSON.stringify(v);
     }
@@ -25,15 +25,15 @@ angular.module('myApp.card.gameControl-service', [])
       currentGame = gameKey;
     }
 
-    this.setCountryData = function(countryData) {
+    this.setCountryData = function (countryData) {
       set('countryData', countryData);
     }
 
-    this.getCountryData = function() {
+    this.getCountryData = function () {
       return get('countryData');
     }
 
-    this.getCountryNames = function() {
+    this.getCountryNames = function () {
       return get('countryData').map(x => x.nome);
     }
 
@@ -46,12 +46,20 @@ angular.module('myApp.card.gameControl-service', [])
         }
       },
 
-      gamePlayers: function gamePlayers(gameKey) {
-        return this.games().child(gameKey).child('players');
+      gamePlayers: function gamePlayers(gameKey, playerKey) {
+        if (playerKey) {
+          return this.games().child(gameKey).child('players').child(playerKey);
+        } else {
+          return this.games().child(gameKey).child('players');
+        }
       },
 
-      playerCards: function playerCards(gameKey, playerKey) {
-        return this.gamePlayers(gameKey).child(playerKey).child('cards');
+      playerCards: function playerCards(gameKey, playerKey, cardKey) {
+        if (cardKey) {
+          return this.gamePlayers(gameKey).child(playerKey).child('cards').child(cardKey);
+        } else {
+          return this.gamePlayers(gameKey).child(playerKey).child('cards');
+        }
       }
     }
   }])
@@ -60,8 +68,8 @@ angular.module('myApp.card.gameControl-service', [])
       var instance = {};
 
       instance.state = 'start',
-      instance.creator = creator,
-      instance.currentPlayer = creator;
+        instance.creator = creator,
+        instance.currentPlayer = creator;
 
       instance.toFirebase = function toFirebase() {
         return {

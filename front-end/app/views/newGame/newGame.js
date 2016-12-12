@@ -90,6 +90,12 @@ angular.module('myApp.newGame', ['ngRoute'])
 
       $scope.startNewGame = function () {
         var username = $scope.username;
+
+        if(!username) {
+          alert("Escolha um nickname antes de criar um jogo");
+          return;
+        }
+
         var game = gameFactory(null, username);
 
         gameService.setUsername(username);
@@ -106,6 +112,11 @@ angular.module('myApp.newGame', ['ngRoute'])
 
       $scope.selectGame = function (gameKey) {
         var username = $scope.username;
+
+        if(!username) {
+          alert("Escolha um nickname antes de entrar em um jogo");
+          return;
+        }
 
         gameService.setUsername(username);
 

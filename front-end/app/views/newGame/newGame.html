@@ -4,27 +4,22 @@
   </div>
   <div class="instructions-container col-xs-offset-2 col-xs-8 col-sm-6 col-sm-offset-0">
     <h2>Crie um novo jogo ou entre em um já existente</h2>
+        <label for="username" class="sr-only">Apelido:</label>
+        <input type="text" class="form-control input-lg" placeholder="Escolha um nickname" ng-model="username">
   </div>
   <div class="right-arrow-container hidden-xs col-sm-3">
     <img class="arrow right-arrow" src="assets/img/arrow.png" alt="Seta para a direita">
   </div>
 </div>
 <div class="board row">
-  <div class="col-sm-8">
+  <div class="col-sm-6">
     <div>
-      <h3>Criar novo jogo</h3>
-      <div class="input-group input-group-lg">
-        <label for="username" class="sr-only">Nick:</label>
-        <input type="text" class="form-control" placeholder="Nickname" ng-model="username">
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="startNewGame()">Novo Jogo</button>
-        </span>
-      </div><!-- /input-group -->
+      <h3>Criar um Novo Jogo</h3>
+      <button type="button" class="btn btn-default btn-lg btn-block" ng-click="startNewGame()">Novo Jogo</button>
     </div>
-    <card country="card"></card>
   </div>
-  <div class="col-sm-4">
-    <h3>Jogos Disponíveis</h3>
+  <div class="col-sm-6">
+    <h3>Entrar em Jogos Disponíveis</h3>
     <div class="games list-group">
       <a ng-repeat="game in games" class="list-group-item" ng-click="selectGame(game.$id)">
         <h4 class="list-group-item-heading">Jogo de <strong>{{game.creator}}</strong></h4>
@@ -33,3 +28,5 @@
     </div>
   </div>
 </div>
+<hr>
+<card country="card"></card>

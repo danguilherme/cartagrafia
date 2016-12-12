@@ -11,13 +11,19 @@ angular.module('myApp.card.card-directive', [])
       country: '=',
       countryNames: '=',
       readOnly: '=',
-      selectProperty: '@'
+      selectProperty: '='
     },
     link: function($scope) {
       $scope.selectedProperty = null;
+      
       $scope.propertyClick = function(property) {
         $scope.selectedProperty = property;
-        console.log(property);
+      }
+    },
+    controller: function($scope) {
+      $scope.countrySelect = function() {
+        if($scope.selectProperty)
+          $scope.selectProperty($scope.selectedProperty, $scope.country[$scope.selectedProperty], $scope.selectedCountryName);
       }
     }
   }
