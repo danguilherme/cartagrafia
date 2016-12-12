@@ -73,6 +73,11 @@ angular.module('myApp.newGame', ['ngRoute'])
         players.$add({
           username: playerName
         }).then(firebasePlayer => {
+          // add 1 player to the counter
+          gameService.database.games(gameKey).child('playersCount').transaction(function (current_value) {
+            return (current_value || 0) + 1;
+          });
+
           var playerKey = firebasePlayer.getKey();
           var cardsRef = gameService.database.playerCards(gameKey, playerKey);
 

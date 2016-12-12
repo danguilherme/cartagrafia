@@ -1,16 +1,28 @@
 <div id="game-page">
   <div class="instructions">
     <h1>Ajuda</h1>
-    <p ng-show="isCurrentPlayer">
-      Selecione uma carta para jogar.
+    <p ng-show="state('my-turn') && state('select-property')">
+      <strong>É sua vez!</strong> Selecione uma carta para jogar.
     </p>
-    <p ng-show="!isCurrentPlayer">
-      Aguarde a sua vez.
+    <p ng-show="state('select-property') && !state('my-turn')">
+      {{game.currentPlayer}} está fazendo sua escolha, aguarde.
+    </p>
+    <p ng-show="state('others-select-card') && !state('my-turn')">
+      Escolha uma carta para concorrer com a carta escolhida pelo seu oponente.
     </p>
   </div>
 
   <div ng-if="selectedCard">
-    <card country="selectedCard" country-names="countryNames" select-property="onSelectedPropertyAndCountry"></card>
+    <card
+      country="selectedCard"
+      country-names="countryNames"
+      select-property="onSelectedPropertyAndCountry"
+      read-only="state('others-select-card')"
+      selected-property="selectedCard.selectedPropery"></card>
+      <button type="button"
+        class="btn btn-primary btn-lg"
+        ng-show="state('others-select-card') && !state('my-turn') && !me.propertyValue"
+        ng-click="confirmCardSelection()">Selecionar Carta</button>
   </div>
 
   <div class="row">
@@ -28,8 +40,8 @@
     <div class="my-hand col-sm-9 col-md-10">
       <h2>Minha Mão</h2>
       <div>{{me.username}} - {{me.cardsCount}} carta(s)</div>
-      <div>
-        <card ng-click="selectCard(card)" ng-repeat="card in cards" country="card" read-only="true"></card>
+      <div ng-class="{ 'selectable': state('my-turn') || state('others-select-card') }">
+        <card ng-click="(state('my-turn') || state('others-select-card')) && selectCard(card)" ng-repeat="card in cards" country="card" read-only="true"></card>
       </div>
     </div>
   </div>

@@ -128,12 +128,14 @@ a[ng-click] {
 }
 
 .card .properties li {
-  padding: 5px;
 }
 
-.card .properties li,
 .card .properties li a {
   text-decoration: none;
+}
+
+.card .properties .item {
+  padding: 5px;
   color: #fff;
   display: block;
   width: 100%;
@@ -222,12 +224,12 @@ a[ng-click] {
   margin-top: -10px;
 }
 
-#game-page .my-hand .card {
+#game-page .my-hand .selectable .card {
   cursor: pointer;
   transition: box-shadow .3s linear, transform .3s linear;
 }
 
-#game-page .my-hand .card:hover {
+#game-page .my-hand .selectable .card:hover {
   box-shadow: 5px 5px 5px rgba(50, 50, 50, 0.77);
   transform: translate(-5px, -5px);
 }
