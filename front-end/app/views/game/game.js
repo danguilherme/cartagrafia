@@ -86,7 +86,7 @@ angular.module('myApp.game', ['ngRoute'])
             alert("Sua carta ganhou! Ela foi removida da sua mão.");
 
             // GANHOU! Remove a carta do baralho...
-            var cardRef = gameService.database.playerCards($scope.game.$id, $scope.me.$id, $scope.compare.selectedCardId);
+            var cardRef = gameService.database.playerCards($scope.game.$id, $scope.me.$id, $scope.selectedCard.$id);
             console.log(cardRef.toString());
             $firebaseObject(cardRef).$remove();
             
@@ -135,20 +135,19 @@ angular.module('myApp.game', ['ngRoute'])
       $scope.confirmCardSelection = function() {
         if ($scope.isCurrentPlayer()) {
           // checar se acertou o nome do país, se não só passa pro próximo.
-          if ($scope.selectedCard.nome === $scope.selectedCard.selectedCountryName) { 
-            $scope.compare.selectedProperty = $scope.selectedCard.selectedProperty;
-            $scope.compare.propertyValue = $scope.selectedCard.selectedPropertyValue;
-            $scope.compare.countryName = $scope.selectedCard.selectedCountryName;
-            $scope.compare.playersSelected = ($scope.compare.playersSelected || 0) + 1;
-            $scope.compare.selectedCardId = $scope.selectedCard.$id;
-
+          if ($scope.selectedCard.nome === $scope.selectedCard.selectedCountryName) {
             $scope.game.state = 'others-select-card';
-
-            $scope.me.propertyValue = $scope.selectedCard.selectedPropertyValue;
-            $scope.me.$save();
-
             $scope.game.$save().then(function() {
-              console.log('Sucesso!');
+              // salva o valor escolhido no jogador...
+              $scope.me.propertyValue = $scope.selectedCard.selectedPropertyValue;
+              $scope.me.$save();
+
+              // salva a comparação
+              $scope.compare.selectedProperty = $scope.selectedCard.selectedProperty;
+              $scope.compare.propertyValue = $scope.selectedCard.selectedPropertyValue;
+              $scope.compare.countryName = $scope.selectedCard.selectedCountryName;
+              $scope.compare.playersSelected = ($scope.compare.playersSelected || 0) + 1;
+              $scope.compare.selectedCardId = $scope.selectedCard.$id;
               $scope.compare.$save();
             }).catch(function(error) {
               alert('Error!');
@@ -166,15 +165,19 @@ angular.module('myApp.game', ['ngRoute'])
           }
         } else {
           $scope.me.propertyValue = $scope.selectedCard[$scope.compare.selectedProperty];
-          $scope.me.$save();
+          var saveCardPrommise = $scope.me.$save();
 
           $scope.compare.playersSelected++;
-          $scope.compare.$save().then(x => {
-            if ($scope.compare.playersSelected === $scope.game.playersCount) {
-              $scope.game.state = 'compare-results';
-              $scope.game.$save();
-            }
-          });
+          var saveComparePromise = $scope.compare.$save();
+
+          Promise
+            .all([saveCardPrommise, saveComparePromise])
+            .then(x => {
+              if ($scope.compare.playersSelected >= $scope.game.playersCount) {
+                $scope.game.state = 'compare-results';
+                $scope.game.$save();
+              }
+            });
 
           $scope.selectedCard.selectedPropery = $scope.compare.selectedProperty;
         }

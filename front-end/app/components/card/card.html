@@ -8,7 +8,6 @@
     <li ng-hide="readOnly">
       <span>País:</span><br>
       <select class="country-names-select" name="countries"
-        ng-disabled="!selectedProperty"
         ng-change="countrySelect(selectedCountryName)"
         ng-options="name for name in countryNames | orderBy"
         ng-model="selectedCountryName"><option value="">Que país está representado aqui?</option></select>
