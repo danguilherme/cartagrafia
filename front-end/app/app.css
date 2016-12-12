@@ -1,0 +1,58 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li + li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.card {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  background-color: #ddd;
+  width: 300px;
+  display: inline-block;
+}
+
+.card .card-basic-info {
+  position: relative;
+}
+
+.card .country-name {
+  position: absolute;
+  font-weight: bold;
+  font-size: 2em;
+  color: #eee;
+  bottom: 0;
+  left: 5px;
+  text-shadow: 0 0 4px #666;
+}
+
+.card .country-flag {
+  max-width: 100px;
+  position: absolute;
+}
+
+.card .country-map {
+  max-width: 100%;
+  width: 100%;
+}

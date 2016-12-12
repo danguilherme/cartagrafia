@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-basic-info">
+    <span class="country-name">{{country.nome}}</span>
+    <img class="country-flag" src="dados/img/bandeiras/{{country.imagem}}" alt="Bandeira">
+    <img class="country-map" src="dados/img/mapa/{{country.imgMapa}}" alt="Mapa">
+  </div>
+  <ul class="infos">
+    <li>{{country.nPresidente}}: {{country.presidente}}</li>
+    <li ng-hide="country.vice_presidente === 'No data'">{{country.nVice_presidente}}: {{country.vice_presidente}}</li>
+  </ul>
+  <ul class="properties">
+    <li>População: {{country.populacao}}</li>
+    <li>Área --- clicável</li>
+    <li>PIB --- clicável</li>
+    <li>GINI --- clicável</li>
+    <li>Facilidade negócios --- clicável</li>
+  </ul>
+
+  <!--TEMP-->
+  <pre>
+    {{country | json}}
+  </pre>
+</div>
