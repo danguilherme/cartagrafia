@@ -60,6 +60,10 @@ angular.module('myApp.view1', ['ngRoute'])
       addPlayerToGame(gameKey, $scope.username)
     }
 
+    $scope.playersCount = function(game) {
+      return Object.keys(game.players || {}).length;
+    }
+
     /** DATABASE */
     function games() {
       return firebase.database().ref().child("games");
