@@ -74,11 +74,13 @@ a[ng-click] {
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
-  background-color: #ddd;
-  width: 300px;
+  width: 250px;
   display: inline-block;
   box-shadow: 9px 7px 5px rgba(50, 50, 50, 0.77);
-  background: url("components/card/bg.png");
+  background-image: url("components/card/bg.png");
+  color: #333;
+  font-family: Calibri, sans-serif;
+  font-size: .8em;
 }
 
 .card .card-basic-info {
@@ -87,7 +89,7 @@ a[ng-click] {
 }
 
 .card .infos {
-  height: 70px;
+  min-height: 93px;
 }
 
 .card .infos li,
@@ -122,17 +124,21 @@ a[ng-click] {
   display: block;
   width: 100%;
   height: 100%;
-  font-weight: bold;
 }
 
 .card .infos li span,
-.card .properties li span {
+.card .properties .value {
   font-weight: bold;
 }
 
-.card .properties li span {
-  width: 170px;
+.card .properties .property {
   display: inline-block;
+  text-align: left;
+}
+
+.card .properties .value {
+  display: inline-block;
+  float: right;
 }
 
 .card .country-name {
@@ -143,14 +149,41 @@ a[ng-click] {
   bottom: 0;
   left: 5px;
   text-shadow: 0 0 4px #666;
+  z-index: 1;
+  line-height: 1;
 }
 
 .card .country-flag {
   max-width: 100px;
+  max-height: 50%;
   position: absolute;
 }
 
 .card .country-map {
   max-width: 100%;
   width: 100%;
+}
+
+#game-page {}
+
+#game-page .other-players {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+#game-page .cards-count-container {
+  position: relative;
+  display: inline-block;
+}
+
+#game-page .cards-count {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+}
+
+#game-page .player-username {
+  margin-top: -10px;
 }

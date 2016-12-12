@@ -1,6 +1,3 @@
-
-
-
 <div class="card">
   <div class="card-basic-info">
     <span class="country-name">{{country.capital}}</span>
@@ -8,19 +5,18 @@
     <img class="country-map" src="dados/img/mapa/{{country.imgMapa}}" alt="Mapa">
   </div>
   <ul class="infos">
-    <li><span>{{country.nPresidente}}:</span> {{country.presidente}}</li>
-    <li ng-hide="country.vice_presidente === 'No data'"><span>{{country.nVice_presidente}}:</span> {{country.vice_presidente}}</li>
+    <li><span>{{country.nPresidente}}:</span><br>{{country.presidente}}</li>
+    <li ng-hide="country.vice_presidente === 'No data'"><span>{{country.nVice_presidente}}:</span><br>{{country.vice_presidente}}</li>
   </ul>
   <ul class="properties">
-    <li><a href="#"><span>População:</span> {{country.populacao | number : fractionSize}}</a></li>
-    <li> <a href="#"><span>Área:</span>{{country.area | number : fractionSize}}</a></li>
-    <li><a href="#"><span>PIB:</span> {{country.PIB_percapita | number: fractionSize}}</a></li>
-    <li><a href="#"><span>GINI:</span> {{country.gini}}</a></li>
-    <li><a href="#"><span>Facilidade negócios:</span> {{country.facilidade_negocios}}</a></li>
+    <li><a ng-click="propertyClick('populacao')"><span class="property">População:</span> <span class="value">{{country.populacao | number : fractionSize}}</span></a></li>
+    <li><a ng-click="propertyClick('area')"><span class="property">Área:</span> <span class="value">{{country.area | number : fractionSize}}</span></a></li>
+    <li><a ng-click="propertyClick('PIB_percapita')"><span class="property">PIB:</span> <span class="value">{{country.PIB_percapita | number: fractionSize}}</span></a></li>
+    <li><a ng-click="propertyClick('gini')"><span class="property">GINI:</span> <span class="value">{{country.gini}}</span></a></li>
+    <li><a ng-click="propertyClick('facilidade_negocios')"><span class="property">Facilidade negócios:</span> <span class="value">{{country.facilidade_negocios}}</span></a></li>
   </ul>
-
   <!--TEMP-->
   <!--<pre>-->
-    <!--{{country | json}}-->
+  <!--{{country | json}}-->
   <!--</pre>-->
 </div>

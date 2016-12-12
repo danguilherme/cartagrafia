@@ -4,10 +4,11 @@
 angular.module('myApp', [
   'ngRoute',
   'firebase',
-  'myApp.view1',
-  'myApp.view2',
+  'myApp.newGame',
+  'myApp.game',
   'myApp.version',
-  'myApp.card'
+  'myApp.card',
+  'myApp.gameControl'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   // Initialize Firebase
@@ -22,5 +23,5 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
   $locationProvider.hashPrefix('!');
 
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.otherwise({redirectTo: '/'});
 }]);

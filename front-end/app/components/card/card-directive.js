@@ -6,6 +6,7 @@ angular.module('myApp.card.card-directive', [])
   return {
     restrict: 'E',
     templateUrl: '/components/card/card.html',
+    replace: true,
     scope: {
       country: '='
     },
