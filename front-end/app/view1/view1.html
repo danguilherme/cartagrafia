@@ -2,8 +2,12 @@
   <label for="username">Nick:</label>
   <input id="username" type="text" ng-model="username">
 
-  <button type="button" ng-click="startNewGame">Novo Jogo</button>
+  <button type="button" ng-click="startNewGame()">Novo Jogo</button>
 </div>
+
+<ul class="games">
+  <li ng-repeat="game in games"><a href="#" ng-click="selectGame(game.$id)">{{game.$id}}: {{game.currentPlayer}}</a></li>
+</ul>
 
 <p>This is the partial for view 1.</p>
 <card country="card"></card>

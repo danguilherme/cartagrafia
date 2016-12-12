@@ -10,6 +10,16 @@ angular.module('myApp', [
   'myApp.card'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCzgpX4vtSkFoAJ7e77OI8FnsgZ-vvJskg",
+    authDomain: "cartagrafia-df4e1.firebaseapp.com",
+    databaseURL: "https://cartagrafia-df4e1.firebaseio.com",
+    storageBucket: "cartagrafia-df4e1.appspot.com",
+    messagingSenderId: "589565613544"
+  };
+  firebase.initializeApp(config);
+
   $locationProvider.hashPrefix('!');
 
   $routeProvider.otherwise({redirectTo: '/view1'});

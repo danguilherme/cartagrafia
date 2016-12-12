@@ -8,4 +8,11 @@ angular.module('myApp.card.card-service', [])
       
     }
   };
+}])
+.factory('cardFactory', ['$firebaseObject', '$firebaseArray', '$firebaseAuth', function ($firebaseObject, $firebaseArray, $firebaseAuth) {
+  return function () {
+    return {
+      test: 'test'
+    }
+  };
 }]);
