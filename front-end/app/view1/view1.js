@@ -27,7 +27,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
     function onReady(dados) {
       firebase.database().ref().child('games');
-      $scope.card = dados[25];
+      $scope.card = dados[5];
 
       
       var ref = firebase.database().ref().child("games");

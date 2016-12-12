@@ -1,23 +1,26 @@
+
+
+
 <div class="card">
   <div class="card-basic-info">
-    <span class="country-name">{{country.nome}}</span>
+    <span class="country-name">{{country.capital}}</span>
     <img class="country-flag" src="dados/img/bandeiras/{{country.imagem}}" alt="Bandeira">
     <img class="country-map" src="dados/img/mapa/{{country.imgMapa}}" alt="Mapa">
   </div>
   <ul class="infos">
-    <li>{{country.nPresidente}}: {{country.presidente}}</li>
-    <li ng-hide="country.vice_presidente === 'No data'">{{country.nVice_presidente}}: {{country.vice_presidente}}</li>
+    <li><span>{{country.nPresidente}}:</span> {{country.presidente}}</li>
+    <li ng-hide="country.vice_presidente === 'No data'"><span>{{country.nVice_presidente}}:</span> {{country.vice_presidente}}</li>
   </ul>
   <ul class="properties">
-    <li>População: {{country.populacao}}</li>
-    <li>Área --- clicável</li>
-    <li>PIB --- clicável</li>
-    <li>GINI --- clicável</li>
-    <li>Facilidade negócios --- clicável</li>
+    <li><a href="#"><span>População:</span> {{country.populacao | number : fractionSize}}</a></li>
+    <li> <a href="#"><span>Área:</span>{{country.area | number : fractionSize}}</a></li>
+    <li><a href="#"><span>PIB:</span> {{country.PIB_percapita | number: fractionSize}}</a></li>
+    <li><a href="#"><span>GINI:</span> {{country.gini}}</a></li>
+    <li><a href="#"><span>Facilidade negócios:</span> {{country.facilidade_negocios}}</a></li>
   </ul>
 
   <!--TEMP-->
-  <pre>
-    {{country | json}}
-  </pre>
+  <!--<pre>-->
+    <!--{{country | json}}-->
+  <!--</pre>-->
 </div>
