@@ -61,28 +61,42 @@ angular.module('myApp.game', ['ngRoute'])
         var isWinner = false;
         var otherValues = $scope.getOtherPlayers().map(x => Number(x.propertyValue));
         var myValue = Number($scope.compare.propertyValue);
-        if ($scope.compare.selectedProperty === 'gini')
-          // GINI: quanto menor, melhor
+        if ($scope.compare.selectedProperty === 'gini' || $scope.compare.selectedProperty === 'facilidade_negocios') {
+          // quanto menor, melhor
           isWinner = otherValues.every(x => x > myValue);
-        else
+        } else {
+          // quanto maior, melhor
           isWinner = otherValues.every(x => x < myValue);
-        
-        if (isWinner) {
-          // GANHOU! Remove a carta do baralho...
-          $firebaseObject(gameService.database.playerCards($scope.game.$id, $scope.me.$id, $scope.compare.selectedCardId)).$remove();
-          
-          gameService.database.gamePlayers($scope.game.$id, $scope.me.$id).child('cardsCount').transaction(function (current_value) {
-            return current_value - 1;
-          });
         }
-
-        $scope.compare.$remove();
-        $scope.compare.won = true;
-        $scope.compare.$save();
 
         $scope.game.currentPlayer = getNextPlayer().username;
         $scope.game.state = "select-property";
-        $scope.game.$save();
+        $scope.game.$save().then(_ => {
+          // reset compare
+          $scope.compare.selectedProperty = null;
+          $scope.compare.propertyValue = null;
+          $scope.compare.countryName = null;
+          $scope.compare.playersSelected = null;
+          $scope.compare.selectedCardId = null;
+          $scope.compare.won = isWinner;
+          $scope.compare.$save();
+
+          // update cards
+          if (isWinner) {
+            alert("Sua carta ganhou! Ela foi removida da sua mão.");
+
+            // GANHOU! Remove a carta do baralho...
+            var cardRef = gameService.database.playerCards($scope.game.$id, $scope.me.$id, $scope.compare.selectedCardId);
+            console.log(cardRef.toString());
+            $firebaseObject(cardRef).$remove();
+            
+            gameService.database.gamePlayers($scope.game.$id, $scope.me.$id).child('cardsCount').transaction(function (current_value) {
+              return current_value - 1;
+            });
+          } else {
+            alert("Sua carta perdeu...")
+          }
+        });
       }
 
       function onStateChange(snapshot) {
@@ -104,36 +118,9 @@ angular.module('myApp.game', ['ngRoute'])
       }
 
       $scope.onSelectedPropertyAndCountry = function(property, value, countryName) {
-        // checar se acertou o nome do país, se não só passa pro próximo.
-        if ($scope.selectedCard.nome === countryName) { 
-          $scope.compare.selectedProperty = property;
-          $scope.compare.propertyValue = value;
-          $scope.compare.countryName = countryName;
-          $scope.compare.playersSelected = ($scope.compare.playersSelected || 0) + 1;
-          $scope.compare.selectedCardId = $scope.selectedCard.$id;
-
-          $scope.game.state = 'others-select-card';
-
-          $scope.me.propertyValue = value;
-          $scope.me.$save();
-
-          $scope.game.$save().then(function() {
-            console.log('Sucesso!');
-            $scope.compare.$save();
-          }).catch(function(error) {
-            alert('Error!');
-          });
-        } else {
-          // nome incorreto, passa a vez
-          alert("O nome do país está errado.");
-
-          $scope.game.currentProperty = undefined;
-
-          $scope.game.currentPlayer = getNextPlayer().username;
-          $scope.game.$save();
-
-          $scope.selectedCard = null;
-        }
+        $scope.selectedCard.selectedCountryName = countryName;
+        $scope.selectedCard.selectedProperty = property;
+        $scope.selectedCard.selectedPropertyValue = value;
       }
 
       // check if the game is in the current state
@@ -146,6 +133,38 @@ angular.module('myApp.game', ['ngRoute'])
       }
 
       $scope.confirmCardSelection = function() {
+        if ($scope.isCurrentPlayer()) {
+          // checar se acertou o nome do país, se não só passa pro próximo.
+          if ($scope.selectedCard.nome === $scope.selectedCard.selectedCountryName) { 
+            $scope.compare.selectedProperty = $scope.selectedCard.selectedProperty;
+            $scope.compare.propertyValue = $scope.selectedCard.selectedPropertyValue;
+            $scope.compare.countryName = $scope.selectedCard.selectedCountryName;
+            $scope.compare.playersSelected = ($scope.compare.playersSelected || 0) + 1;
+            $scope.compare.selectedCardId = $scope.selectedCard.$id;
+
+            $scope.game.state = 'others-select-card';
+
+            $scope.me.propertyValue = $scope.selectedCard.selectedPropertyValue;
+            $scope.me.$save();
+
+            $scope.game.$save().then(function() {
+              console.log('Sucesso!');
+              $scope.compare.$save();
+            }).catch(function(error) {
+              alert('Error!');
+            });
+          } else {
+            // nome incorreto, passa a vez
+            alert("O nome do país está errado.");
+
+            $scope.game.currentProperty = null;
+
+            $scope.game.currentPlayer = getNextPlayer().username;
+            $scope.game.$save();
+
+            $scope.selectedCard = null;
+          }
+        } else {
           $scope.me.propertyValue = $scope.selectedCard[$scope.compare.selectedProperty];
           $scope.me.$save();
 
@@ -158,6 +177,7 @@ angular.module('myApp.game', ['ngRoute'])
           });
 
           $scope.selectedCard.selectedPropery = $scope.compare.selectedProperty;
+        }
       }
 
       init();
