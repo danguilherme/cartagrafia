@@ -1,4 +1,18 @@
 <div id="game-page">
+  <div class="instructions">
+    <h1>Ajuda</h1>
+    <p ng-show="isCurrentPlayer">
+      Selecione uma carta para jogar.
+    </p>
+    <p ng-show="!isCurrentPlayer">
+      Aguarde a sua vez.
+    </p>
+  </div>
+
+  <div ng-if="selectedCard">
+    <card country="selectedCard" country-names="countryNames"></card>
+  </div>
+
   <div class="row">
     <div class="col-sm-3 col-md-2 other-players">
       <h2>Mão dos Oponentes</h2>
@@ -11,11 +25,11 @@
       </div>
     </div>
 
-    <div class="col-sm-9 col-md-10">
+    <div class="my-hand col-sm-9 col-md-10">
       <h2>Minha Mão</h2>
       <div>{{me.username}} - {{me.cardsCount}} carta(s)</div>
       <div>
-        <card ng-repeat="card in cards" country="card"></card>
+        <card ng-click="selectCard(card)" ng-repeat="card in cards" country="card" read-only="true"></card>
       </div>
     </div>
   </div>

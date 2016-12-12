@@ -5,15 +5,28 @@
     <img class="country-map" src="dados/img/mapa/{{country.imgMapa}}" alt="Mapa">
   </div>
   <ul class="infos">
+    <li ng-hide="readOnly">
+      <span>País:</span><br>
+      <select class="country-names-select" name="countries"
+        ng-options="name for name in countryNames | orderBy"
+        ng-model="selectedOption"><option value="">Que país está representado aqui?</option></select>
+    </li>
     <li><span>{{country.nPresidente}}:</span><br>{{country.presidente}}</li>
     <li ng-hide="country.vice_presidente === 'No data'"><span>{{country.nVice_presidente}}:</span><br>{{country.vice_presidente}}</li>
   </ul>
-  <ul class="properties">
-    <li><a ng-click="propertyClick('populacao')"><span class="property">População:</span> <span class="value">{{country.populacao | number : fractionSize}}</span></a></li>
-    <li><a ng-click="propertyClick('area')"><span class="property">Área:</span> <span class="value">{{country.area | number : fractionSize}}</span></a></li>
-    <li><a ng-click="propertyClick('PIB_percapita')"><span class="property">PIB:</span> <span class="value">{{country.PIB_percapita | number: fractionSize}}</span></a></li>
-    <li><a ng-click="propertyClick('gini')"><span class="property">GINI:</span> <span class="value">{{country.gini}}</span></a></li>
-    <li><a ng-click="propertyClick('facilidade_negocios')"><span class="property">Facilidade negócios:</span> <span class="value">{{country.facilidade_negocios}}</span></a></li>
+  <ul class="properties" ng-show="readOnly">
+    <li ng-class="{'active': selectedProperty === 'populacao'}"><span><span class="property">População:</span> <span class="value">{{country.populacao | number : fractionSize}}</span></span></li>
+    <li ng-class="{'active': selectedProperty === 'area'}"><span><span class="property">Área:</span> <span class="value">{{country.area | number : fractionSize}}</span></span></li>
+    <li ng-class="{'active': selectedProperty === 'PIB_percapita'}"><span><span class="property">PIB:</span> <span class="value">{{country.PIB_percapita | number: fractionSize}}</span></span></li>
+    <li ng-class="{'active': selectedProperty === 'gini'}"><span><span class="property">GINI:</span> <span class="value">{{country.gini}}</span></span></li>
+    <li ng-class="{'active': selectedProperty === 'facilidade_negocios'}"><span><span class="property">Facilidade negócios:</span> <span class="value">{{country.facilidade_negocios}}</span></span></li>
+  </ul>
+  <ul class="properties" ng-hide="readOnly">
+    <li ng-class="{'active': selectedProperty === 'populacao'}"><a ng-click="propertyClick('populacao')"><span class="property">População:</span> <span class="value">{{country.populacao | number : fractionSize}}</span></a></li>
+    <li ng-class="{'active': selectedProperty === 'area'}"><a ng-click="propertyClick('area')"><span class="property">Área:</span> <span class="value">{{country.area | number : fractionSize}}</span></a></li>
+    <li ng-class="{'active': selectedProperty === 'PIB_percapita'}"><a ng-click="propertyClick('PIB_percapita')"><span class="property">PIB:</span> <span class="value">{{country.PIB_percapita | number: fractionSize}}</span></a></li>
+    <li ng-class="{'active': selectedProperty === 'gini'}"><a ng-click="propertyClick('gini')"><span class="property">GINI:</span> <span class="value">{{country.gini}}</span></a></li>
+    <li ng-class="{'active': selectedProperty === 'facilidade_negocios'}"><a ng-click="propertyClick('facilidade_negocios')"><span class="property">Facilidade negócios:</span> <span class="value">{{country.facilidade_negocios}}</span></a></li>
   </ul>
   <!--TEMP-->
   <!--<pre>-->

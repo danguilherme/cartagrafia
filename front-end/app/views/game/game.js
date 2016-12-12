@@ -12,7 +12,7 @@ angular.module('myApp.game', ['ngRoute'])
 .controller('GameCtrl',  ['$scope', '$routeParams', '$location', '$firebaseObject', '$firebaseArray', '$firebaseAuth', 'cardFactory', 'gameService',
     function ($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $firebaseAuth, cardFactory, gameService) {
       $scope.username = gameService.getUsername();
-      $scope.game = $firebaseObject(gameService.database.games($routeParams.gameKey));
+      $scope.game = null;
       $scope.players = [];
       $scope.cards = [];
       
@@ -24,6 +24,13 @@ angular.module('myApp.game', ['ngRoute'])
           $scope.me = getMyPlayer();
           $scope.cards = $firebaseArray(gameService.database.playerCards($routeParams.gameKey, $scope.me.$id))
         });
+
+        $scope.game = $firebaseObject(gameService.database.games($routeParams.gameKey))
+        $scope.game.$loaded(x => {
+          $scope.isCurrentPlayer = $scope.game.currentPlayer === $scope.username;
+        });
+
+        $scope.countryNames = gameService.getCountryNames();
       }
 
       function getMyPlayer() {
@@ -32,6 +39,10 @@ angular.module('myApp.game', ['ngRoute'])
 
       $scope.getOtherPlayers = function() {
         return $scope.players.filter(x => x.username != $scope.username);
+      }
+
+      $scope.selectCard = function(card) {
+        $scope.selectedCard = card;
       }
 
       init();

@@ -8,10 +8,17 @@ angular.module('myApp.card.card-directive', [])
     templateUrl: '/components/card/card.html',
     replace: true,
     scope: {
-      country: '='
+      country: '=',
+      countryNames: '=',
+      readOnly: '=',
+      selectProperty: '@'
     },
-    controller: function($scope) {
-      
+    link: function($scope) {
+      $scope.selectedProperty = null;
+      $scope.propertyClick = function(property) {
+        $scope.selectedProperty = property;
+        console.log(property);
+      }
     }
   }
 }]);

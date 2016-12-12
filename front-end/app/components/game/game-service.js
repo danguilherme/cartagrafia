@@ -25,6 +25,18 @@ angular.module('myApp.card.gameControl-service', [])
       currentGame = gameKey;
     }
 
+    this.setCountryData = function(countryData) {
+      set('countryData', countryData);
+    }
+
+    this.getCountryData = function() {
+      return get('countryData');
+    }
+
+    this.getCountryNames = function() {
+      return get('countryData').map(x => x.nome);
+    }
+
     this.database = {
       games: function games(key) {
         if (key) {

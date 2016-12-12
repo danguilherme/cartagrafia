@@ -71,6 +71,7 @@ a[ng-click] {
 }
 
 .card {
+  cursor: default;
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
@@ -110,15 +111,27 @@ a[ng-click] {
   background: #253879;
 }
 
+.card .properties li.active {
+  box-shadow: 0 3px 0 #771e32;
+  background: #a24258;
+}
+
+.card .properties li.active:hover {
+  box-shadow: 0 3px 0 #771e32;
+  background: #792538;
+}
+
 .card .properties,
 .card .infos {
   padding: 0 0 0 0px;
 }
 
-.card .properties li {}
-
-.card .properties li a {
+.card .properties li {
   padding: 5px;
+}
+
+.card .properties li,
+.card .properties li a {
   text-decoration: none;
   color: #fff;
   display: block;
@@ -164,7 +177,25 @@ a[ng-click] {
   width: 100%;
 }
 
+.card .country-names-select {
+  max-width: 100%;
+}
+
 #game-page {}
+
+#game-page .instructions {
+  background: rgba(0, 0, 0, .6);
+  padding: 1em;
+  border-radius: 5px;
+}
+
+#game-page .instructions h1 {
+  margin: 0;
+}
+
+#game-page .instructions p {
+  margin-bottom: 0;
+}
 
 #game-page .other-players {
   position: relative;
@@ -186,4 +217,14 @@ a[ng-click] {
 
 #game-page .player-username {
   margin-top: -10px;
+}
+
+#game-page .my-hand .card {
+  cursor: pointer;
+  transition: box-shadow .3s linear, transform .3s linear;
+}
+
+#game-page .my-hand .card:hover {
+  box-shadow: 13px 11px 5px rgba(50, 50, 50, 0.77);
+  transform: translate(-4px, -4px);
 }

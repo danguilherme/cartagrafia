@@ -20,7 +20,6 @@ angular.module('myApp.newGame', ['ngRoute'])
     function ($scope, $location, $firebaseObject, $firebaseArray, $firebaseAuth, cardFactory, gameService, gameFactory) {
       $scope.username = null;
       $scope.selectedGame = null;
-      var countryData = [];
 
       function init() {
         // download data
@@ -31,7 +30,8 @@ angular.module('myApp.newGame', ['ngRoute'])
 
       function onReady(loadedCountryData) {
         firebase.database().ref().child('games');
-        countryData = loadedCountryData;
+        var countryData = shuffleArray(loadedCountryData);
+        gameService.setCountryData(countryData);
         $scope.card = countryData[5];
 
         var ref = gameService.database.games();
@@ -49,7 +49,7 @@ angular.module('myApp.newGame', ['ngRoute'])
       }
 
       function drawCards() {
-        return countryData.splice(0, 5);
+        return gameService.getCountryData().splice(0, 5);
       }
 
       /**
