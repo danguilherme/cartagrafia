@@ -87,21 +87,42 @@ angular.module('myApp.game', ['ngRoute'])
 
             // GANHOU! Remove a carta do baralho...
             var cardRef = gameService.database.playerCards($scope.game.$id, $scope.me.$id, $scope.selectedCard.$id);
-            console.log(cardRef.toString());
             $firebaseObject(cardRef).$remove();
-            
+
             gameService.database.gamePlayers($scope.game.$id, $scope.me.$id).child('cardsCount').transaction(function (current_value) {
               return current_value - 1;
             });
+
+            if (($scope.me.cardsCount - 1) === 0) {
+              $scope.game.state = 'end';
+              $scope.game.winner = $scope.me.username;
+              $scope.game.$save();
+            }
+
+            $scope.selectedCard = null;
           } else {
-            alert("Sua carta perdeu...")
+            alert("Sua carta perdeu...");
+            $scope.selectedCard = null;
           }
         });
+      }
+
+      function theEnd() {
+        if ($scope.game.winner == $scope.me.username) {
+          alert("PARABÉNS! Você venceu!");
+        } else {
+          alert('QUE PENA! Você perdeu. Desafie seu(s) oponente(s) novamente!');
+        }
+
+        $scope.game.$remove();
+        $location.url('/');
       }
 
       function onStateChange(snapshot) {
         if (snapshot.val() == 'compare-results' && $scope.isCurrentPlayer()) {
           compareResults();
+        } else if (snapshot.val() == 'end') {
+          theEnd();
         }
       }
 

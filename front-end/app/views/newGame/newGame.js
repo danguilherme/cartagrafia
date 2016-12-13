@@ -49,7 +49,7 @@ angular.module('myApp.newGame', ['ngRoute'])
       }
 
       function drawCards() {
-        return gameService.getCountryData().splice(0, 5);
+        return gameService.getCountryData().splice(0, 2);
       }
 
       /**
@@ -88,7 +88,7 @@ angular.module('myApp.newGame', ['ngRoute'])
           });
           
           firebasePlayer.child('cardsCount').transaction(function (current_value) {
-            return 5;
+            return cards.length;
           });
         })
       }

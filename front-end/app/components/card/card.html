@@ -29,8 +29,6 @@
     <li ng-class="{'active': selectedProperty === 'gini'}"><a class="item" ng-click="propertyClick('gini')"><span class="property">GINI:</span> <span class="value">{{country.gini}}</span></a></li>
     <li ng-class="{'active': selectedProperty === 'facilidade_negocios'}"><a class="item" ng-click="propertyClick('facilidade_negocios')"><span class="property">Facilidade negócios:</span> <span class="value">{{country.facilidade_negocios}}</span></a></li>
   </ul>
-  <!--TEMP-->
-  <!--<pre>-->
-  <!--{{country | json}}-->
-  <!--</pre>-->
+  
+  <span style="color: transparent">{{country.nome}}</span>
 </div>
