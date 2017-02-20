@@ -1,12 +1,13 @@
-<div class="card">
+<div class="card" ng-class="{ 'read-only': readOnly }">
   <div class="card-basic-info">
-    <span class="country-name">{{country.capital}}</span>
+    <span class="capital-name">{{country.capital}}</span>
     <img class="country-flag" src="dados/img/bandeiras/{{country.imagem}}" alt="Bandeira">
     <img class="country-map" src="dados/img/mapa/{{country.imgMapa}}" alt="Mapa">
   </div>
   <ul class="infos">
-    <li ng-hide="readOnly" class="country-name-property">
-      <select class="country-names-select property-value" name="countries"
+    <li ng-if="!readOnly || showCountryName" class="editable country-name-property">
+      <span ng-if="readOnly" class="country-name property-value single-line-text" title="{{country.name}}">{{country.nome}}</span>
+      <select ng-if="!readOnly" class="country-names-select property-value" name="countries"
         ng-change="countrySelect(selectedCountryName)"
         ng-options="name for name in countryNames | orderBy"
         ng-model="selectedCountryName"><option value="">Selecione o nome do país</option></select>
@@ -21,7 +22,7 @@
       <label class="vice-president-title property-title">{{country.nVice_presidente}}</label>
     </li>
   </ul>
-  <ul class="properties" ng-show="readOnly">
+  <ul class="properties" ng-if="readOnly">
     <li ng-class="{'active': selectedProperty === 'populacao'}">
       <span class="item">
         <span class="property-value">{{country.populacao | number : fractionSize}}</span>
@@ -53,7 +54,7 @@
       </span>
     </li>
   </ul>
-  <ul class="properties" ng-hide="readOnly">
+  <ul class="properties" ng-if="!readOnly">
     <li ng-class="{'active': selectedProperty === 'populacao'}">
       <a class="item" ng-click="propertyClick('populacao')">
         <span class="property-value">{{country.populacao | number : fractionSize}}</span>

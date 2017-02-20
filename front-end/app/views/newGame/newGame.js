@@ -32,12 +32,18 @@ angular.module('myApp.newGame', ['ngRoute'])
         firebase.database().ref().child('games');
         var countryData = shuffleArray(loadedCountryData);
         gameService.setCountryData(countryData);
-        $scope.card = countryData[5];
+
+        setShowcaseCards();
 
         var ref = gameService.database.games();
         // create a synchronized array
         // click on `index.html` above to see it used in the DOM!
         $scope.games = $firebaseArray(ref);
+      }
+
+      function setShowcaseCards() {
+        var countryData = gameService.getCountryData();
+        $scope.cards = countryData.slice(0, 4);
       }
 
       function getGameByKey(key) {

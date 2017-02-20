@@ -83,6 +83,21 @@ a[ng-click] {
   transform: scaleY(-1) rotate(-75deg);
 }
 
+.showcase-cards .showcase-cards-title {
+  text-align: center;
+}
+
+.showcase-cards .cards {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .instructions-container {
   text-align: center;
   font-size: .7em;
@@ -136,23 +151,29 @@ a[ng-click] {
   margin: 5px 0;
 }
 
-.card .properties li {
+.card .properties li,
+.card.read-only .properties li:hover,
+.card.read-only .properties li:focus {
   box-shadow: 0 3px 0 #1e3277;
   background: #4258a2;
   border-radius: 5px;
 }
 
-.card .properties li:hover {
+.card .properties li:hover,
+.card .properties li:focus {
   box-shadow: 0 3px 0 #1e3277;
   background: #253879;
 }
 
-.card .properties li.active {
+.card .properties li.active,
+.card.read-only .properties li.active:hover,
+.card.read-only .properties li.active:focus {
   box-shadow: 0 3px 0 #771e32;
   background: #a24258;
 }
 
-.card .properties li.active:hover {
+.card .properties li.active:hover,
+.card .properties li.active:focus {
   box-shadow: 0 3px 0 #771e32;
   background: #792538;
 }
@@ -160,9 +181,6 @@ a[ng-click] {
 .card .properties,
 .card .infos {
   padding: 0;
-}
-
-.card .properties li {
 }
 
 .card .properties li a {
@@ -181,7 +199,7 @@ a[ng-click] {
   color: #fff;
 }
 
-.card .country-name {
+.card .capital-name {
   position: absolute;
   font-weight: bold;
   font-size: 2em;
@@ -211,7 +229,7 @@ a[ng-click] {
   display: block;
 }
 
-.card .country-name-property {
+.card .editable.country-name-property {
   border: 1px solid gray;
   border-radius: 0;
   padding: 5px;

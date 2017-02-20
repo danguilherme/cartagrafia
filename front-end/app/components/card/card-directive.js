@@ -10,9 +10,10 @@ angular.module('myApp.card.card-directive', [])
     scope: {
       country: '=',
       countryNames: '=',
-      readOnly: '=',
+      readOnly: '=?',
       selectedProperty: '=',
-      selectProperty: '='
+      selectProperty: '=',
+      showCountryName: '=?'
     },
     link: function($scope) {
       $scope.propertyClick = function(property) {
