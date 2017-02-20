@@ -1,15 +1,19 @@
 <div id="game-page">
-  <div class="instructions">
-    <h1>Ajuda</h1>
-    <p ng-show="state('my-turn') && state('select-property')">
-      <strong>É sua vez!</strong> Selecione uma carta para jogar.
-    </p>
-    <p ng-show="state('select-property') && !state('my-turn')">
-      {{game.currentPlayer}} está fazendo sua escolha, aguarde.
-    </p>
-    <p ng-show="state('others-select-card') && !state('my-turn')">
-      Escolha uma carta para concorrer com a carta escolhida pelo seu oponente.
-    </p>
+  <div class="row">
+    <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6">
+      <div class="instructions">
+        <h1>Ajuda</h1>
+        <p ng-show="state('my-turn') && state('select-property')">
+          <strong>É sua vez!</strong> Selecione uma carta para jogar.
+        </p>
+        <p ng-show="state('select-property') && !state('my-turn')">
+          {{game.currentPlayer}} está fazendo sua escolha, aguarde.
+        </p>
+        <p ng-show="state('others-select-card') && !state('my-turn')">
+          Escolha uma carta para concorrer com a carta escolhida pelo seu oponente.
+        </p>
+      </div>
+    </div>
   </div>
 
   <div ng-if="selectedCard">
@@ -25,20 +29,19 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-3 col-md-2 other-players">
-      <h2>Mão dos Oponentes</h2>
-      <div class="player" ng-class="{ 'active': player.username === game.currentPlayer }" ng-repeat="player in getOtherPlayers()">
+    <div class="players col-sm-3 col-md-2">
+      <h2>Jogadores</h2>
+      <div class="player" ng-class="{ 'active': player.username === game.currentPlayer }" ng-repeat="player in players">
         <div class="cards-count-container">
           <img class="cards-count-img" src="/assets/img/card.png" alt="Cartas" width="60px">
           <div class="cards-count">{{player.cardsCount}}</div>
         </div>
-        <div class="player-username">{{player.username}}</div>
+        <div class="player-username">{{player.username}} <small ng-if="player.username === me.username">(você)</small></div>
       </div>
     </div>
 
     <div class="my-hand col-sm-9 col-md-10">
       <h2>Minha Mão</h2>
-      <div>{{me.username}} - {{me.cardsCount}} carta(s)</div>
       <div ng-class="{ 'selectable': state('my-turn') || state('others-select-card') }">
         <card ng-click="(state('my-turn') || state('others-select-card')) && selectCard(card)" ng-repeat="card in cards" country="card" read-only="true"></card>
       </div>

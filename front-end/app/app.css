@@ -38,6 +38,17 @@ a[ng-click] {
   cursor: pointer;
 }
 
+.single-line-text {
+  display: block;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/*
+*/
+
 .game-name {
   text-align: center;
   font-size: 4em;
@@ -82,13 +93,14 @@ a[ng-click] {
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
-  width: 250px;
+  width: 225px;
   display: inline-block;
   border: rgba(50, 50, 50, 0.77) 1px solid;
-  background-image: url("components/card/bg.png");
+  background-image: url("components/card/paper.png");
   color: #333;
   font-family: Calibri, sans-serif;
   font-size: .8em;
+  position: relative;
 }
 
 .card .card-basic-info {
@@ -97,8 +109,24 @@ a[ng-click] {
   background: #efefef;
 }
 
+.card .property-title {
+  display: block;
+  margin: 0;
+  margin-top: -7px;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-weight: lighter;
+  color: #333;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.card .property-value {
+  font-weight: bold;
+}
+
 .card .infos {
-  min-height: 93px;
+  min-height: 65px;
 }
 
 .card .infos li,
@@ -106,12 +134,12 @@ a[ng-click] {
   list-style: none;
   font-size: 0.9em;
   margin: 5px 0;
-  border-radius: 5px;
 }
 
 .card .properties li {
   box-shadow: 0 3px 0 #1e3277;
   background: #4258a2;
+  border-radius: 5px;
 }
 
 .card .properties li:hover {
@@ -131,7 +159,7 @@ a[ng-click] {
 
 .card .properties,
 .card .infos {
-  padding: 0 0 0 0px;
+  padding: 0;
 }
 
 .card .properties li {
@@ -142,26 +170,15 @@ a[ng-click] {
 }
 
 .card .properties .item {
-  padding: 5px;
+  padding: 2.5px 5px;
   color: #fff;
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.card .infos li span,
-.card .properties .value {
-  font-weight: bold;
-}
-
-.card .properties .property {
-  display: inline-block;
-  text-align: left;
-}
-
-.card .properties .value {
-  display: inline-block;
-  float: right;
+.card .properties .property-title {
+  color: #fff;
 }
 
 .card .country-name {
@@ -174,7 +191,7 @@ a[ng-click] {
   text-shadow: 0 0 4px #666;
   z-index: 1;
   line-height: 1;
-  
+
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -194,8 +211,18 @@ a[ng-click] {
   display: block;
 }
 
+.card .country-name-property {
+  border: 1px solid gray;
+  border-radius: 0;
+  padding: 5px;
+  background: white;
+}
+
 .card .country-names-select {
   max-width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 0;
 }
 
 #game-page {}
@@ -204,6 +231,8 @@ a[ng-click] {
   background: rgba(0, 0, 0, .6);
   padding: 1em;
   border-radius: 5px;
+  background-image: url('assets/img/chalkboard_background_72ppi.png');
+  border: 2px #14714d solid;
 }
 
 #game-page .instructions h1 {
@@ -214,18 +243,22 @@ a[ng-click] {
   margin-bottom: 0;
 }
 
-#game-page .other-players {
-  position: relative;
-  display: inline-block;
+#game-page .players {
   text-align: center;
 }
 
-#game-page .other-players .player.active {
-  margin: 10px 0;
-  padding: 10px;
-  background: rgba(50, 113, 77, .7);
+#game-page .players .player {
+  cursor: default;
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+  padding: 5px;
+  background: #a24258;
   border-radius: 5px;
-  border: 2px solid #d21034;
+}
+
+#game-page .players .player.active {
+  border-bottom: 3px solid #771e32;
 }
 
 #game-page .cards-count-container {
@@ -242,6 +275,10 @@ a[ng-click] {
 
 #game-page .player-username {
   margin-top: -10px;
+}
+
+#game-page .player-username small {
+  font-style: italic;
 }
 
 #game-page .my-hand .selectable .card {
