@@ -61,26 +61,9 @@ a[ng-click] {
   text-decoration: none;
 }
 
-.arrow {
-  max-width: 100%;
-  max-height: 100px;
-  margin-top: 1.5em;
-}
-
-.left-arrow-container {
-  text-align: right;
-}
-
-.left-arrow {
-  transform: rotate(105deg);
-}
-
-.right-arrow-container {
-  text-align: left;
-}
-
-.right-arrow {
-  transform: scaleY(-1) rotate(-75deg);
+#new-game-page .games {
+  max-height: 280px;
+  overflow: auto;
 }
 
 .showcase-cards {

@@ -1,25 +1,25 @@
-<div class="board row">
-  <div class="col-sm-6 col-md-4">
+<div id="new-game-page" class="board row">
+  <div class="col-xs-6 col-sm-5 col-md-4">
     <div class="instructions-container">
-      <h2>Crie um novo jogo ou entre em um já existente</h2>
+      <h2>Entrar Nome de Usuário</h2>
       <label for="username" class="sr-only">Apelido:</label>
       <input type="text" class="form-control input-lg" placeholder="Escolha um nickname" ng-model="username">
     </div>
     <div>
-      <h3>Criar um Novo Jogo</h3>
+      <h3>Entrar em um Jogo</h3>
       <button type="button" class="btn btn-default btn-lg btn-block" ng-click="startNewGame()">Novo Jogo</button>
-    </div>
-    <div>
-      <h3>Entrar em Jogos Disponíveis</h3>
+      <hr>
       <div class="games list-group">
         <a ng-repeat="game in games" class="list-group-item" ng-click="selectGame(game.$id)">
           <h4 class="list-group-item-heading">Jogo de <strong>{{game.creator}}</strong></h4>
-          <p class="list-group-item-text">{{playersCount(game)}} jogador(es)</p>
+          <p class="list-group-item-text" ng-init="count=playersCount(game)">
+            <ng-pluralize count="count" when="{ 'one': '{} jogador', 'other': '{} jogadores' }"></ng-pluralize>
+          </p>
         </a>
       </div>
     </div>
   </div>
-  <div class="showcase-cards col-sm-6 col-md-8">
+  <div class="showcase-cards col-xs-6 col-sm-7 col-md-8">
     <h2 class="showcase-cards-title">Comece a aprender!</h2>
     <div class="cards">
       <card ng-repeat="card in cards" country="card" read-only="true" show-country-name="true"></card>
