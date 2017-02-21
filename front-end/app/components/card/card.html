@@ -18,20 +18,20 @@
       <label class="president-title property-title">{{country.nPresidente}}</label>
     </li>
     <li ng-hide="country.vice_presidente === 'No data'">
-      <span class="vice-president-name property-value" title="{{country.vice_presidente}}">{{country.vice_presidente}}</span>
+      <span class="vice-president-name property-value single-line-text" title="{{country.vice_presidente}}">{{country.vice_presidente}}</span>
       <label class="vice-president-title property-title">{{country.nVice_presidente}}</label>
     </li>
   </ul>
   <ul class="properties" ng-if="readOnly">
     <li ng-class="{'active': selectedProperty === 'populacao'}">
       <span class="item">
-        <span class="property-value">{{country.populacao | number : fractionSize}}</span>
+        <span class="property-value">{{country.populacao | number: fractionSize}}</span>
         <span class="property-title">População</span>
       </span>
     </li>
     <li ng-class="{'active': selectedProperty === 'area'}">
       <span class="item">
-        <span class="property-value">{{country.area | number : fractionSize}}</span>
+        <span class="property-value">{{country.area | number: fractionSize}}</span>
         <span class="property-title">Área</span>
       </span>
     </li>
@@ -57,13 +57,13 @@
   <ul class="properties" ng-if="!readOnly">
     <li ng-class="{'active': selectedProperty === 'populacao'}">
       <a class="item" ng-click="propertyClick('populacao')">
-        <span class="property-value">{{country.populacao | number : fractionSize}}</span>
+        <span class="property-value">{{country.populacao | number: fractionSize}}</span>
         <span class="property-title">População</span>
       </a>
     </li>
     <li ng-class="{'active': selectedProperty === 'area'}">
       <a class="item" ng-click="propertyClick('area')">
-        <span class="property-value">{{country.area | number : fractionSize}}</span>
+        <span class="property-value">{{country.area | number: fractionSize}}</span>
         <span class="property-title">Área</span>
       </a>
     </li>

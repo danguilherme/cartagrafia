@@ -26,9 +26,6 @@ angular.module('myApp.card.gameControl-service', [])
     }
 
     this.setCountryData = function (countryData) {
-      countryData.forEach(x => {
-        x.gini = (x.gini || '').replace(',', '.');
-      });
       set('countryData', countryData);
     }
 

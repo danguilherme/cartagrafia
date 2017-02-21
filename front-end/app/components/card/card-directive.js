@@ -24,8 +24,8 @@ angular.module('myApp.card.card-directive', [])
       }
     },
     controller: function($scope) {
-      $scope.countrySelect = function() {
-        $scope.country.selectedCountryName = $scope.selectedCountryName;
+      $scope.countrySelect = function(country) {
+        $scope.country.selectedCountryName = country;
       }
     }
   }

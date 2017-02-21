@@ -2,7 +2,7 @@
 
 angular.module('myApp.newGame', ['ngRoute'])
 
-.config(['$routeProvider', function ($routeProvider) {
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {
       templateUrl: 'views/newGame/newGame.html',
       controller: 'NewGameCtrl'
@@ -30,7 +30,7 @@ angular.module('myApp.newGame', ['ngRoute'])
 
       function onReady(loadedCountryData) {
         firebase.database().ref().child('games');
-        var countryData = shuffleArray(loadedCountryData);
+        var countryData = shuffleArray(fixCountryData(loadedCountryData));
         gameService.setCountryData(countryData);
 
         setShowcaseCards();
@@ -43,7 +43,7 @@ angular.module('myApp.newGame', ['ngRoute'])
 
       function setShowcaseCards() {
         var countryData = gameService.getCountryData();
-        $scope.cards = countryData.slice(0, 4);
+        $scope.cards = countryData.slice(0, 3);
       }
 
       function getGameByKey(key) {
@@ -92,7 +92,7 @@ angular.module('myApp.newGame', ['ngRoute'])
             let card = cardsRef.push();
             card.set(x);
           });
-          
+
           firebasePlayer.child('cardsCount').transaction(function (current_value) {
             return cards.length;
           });
@@ -102,7 +102,7 @@ angular.module('myApp.newGame', ['ngRoute'])
       $scope.startNewGame = function () {
         var username = $scope.username;
 
-        if(!username) {
+        if (!username) {
           alert("Escolha um nickname antes de criar um jogo");
           return;
         }
@@ -124,7 +124,7 @@ angular.module('myApp.newGame', ['ngRoute'])
       $scope.selectGame = function (gameKey) {
         var username = $scope.username;
 
-        if(!username) {
+        if (!username) {
           alert("Escolha um nickname antes de entrar em um jogo");
           return;
         }
@@ -142,6 +142,28 @@ angular.module('myApp.newGame', ['ngRoute'])
       function startGame(gameKey) {
         gameService.selectGame(gameKey);
         $location.url('/game/' + gameKey);
+      }
+
+      function fixCountryData(countryData) {
+        return countryData
+          .map(country => {
+            return Object.assign(country, {
+              PIB_percapita: Number(country.PIB_percapita),
+              PIB_percapita_ano: Number(country.PIB_percapita_ano),
+              area: Number(country.area || 0),
+              area_ano: Number(country.area_ano),
+              facilidade_negocios: Number(country.facilicade_negocios || 0),
+              facilidade_negocios_ano: Number(country.facilicade_negocios_ano),
+              gini: Number(String(country.gini || 0).replace(",", ".")),
+              gini_ano: Number(country.gini_ano),
+              idh: Number(String(country.idh || 0).replace(",", ".")),
+              populacao: Number(country.populacao || 0),
+              populacao_ano: Number(country.populacao_ano),
+              ranking: Number(country.ranking)
+            });
+          })
+          .filter(c => c.ranking >= 1 && c.ranking <= 100)
+          .sort((a, b) => a.ranking > b.ranking ? 1 : -1);
       }
 
       init();
